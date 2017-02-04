@@ -1,0 +1,16 @@
+canvas {
+	font-family: ocr;
+}
+
+
+#load {
+	font-family: ocr; 
+	visibility: hidden; 
+	height: 0px;
+}
+
+@font-face {
+    font-family: 'ocr';
+    src: url('./OCRAEXT.TTF');
+}
+
