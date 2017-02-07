@@ -2,25 +2,6 @@ var img = new Image();
 img.src = "dog.jpg"; 
 var canvas = new fabric.Canvas("canvas");
 
-var x = document.createElement("INPUT");
-x.setAttribute("type", "text");
-x.setAttribute("value", "Hello World!");
-x.setAttribute("id", "majorInp");
-x.setAttribute("onkeyup", "updateText(this);");
-
-
-
-document.body.appendChild(x);
-//TODO update canvas text
-function updateText(inputElement)
-{
-    console.log(inputElement.value);
-	Bar.setText("my_text");
-	canvas.renderAll();
-
-}
-
-
 function render(){
 	canvas.setWidth(img.width);
 	canvas.setHeight(img.height);
@@ -32,6 +13,7 @@ function render(){
 
 img.onload = function(){
 	canvas.setBackgroundImage("dog.jpg", render);
+//TODO update canvas text
 
 	var boundingBox = new fabric.Rect({
 	  fill: 'rgba(0,0,0,0)',
@@ -45,7 +27,16 @@ img.onload = function(){
 	  stroke: "red"
 	});
 
-	var movingBox = new fabric.Text(document.getElementById("majorInp").value,{//fabric.Rect({
+	var $major = document.getElementById('major');
+	$major.value = "Your Major Here";
+
+	$major.addEventListener("keyup", function(){
+		console.log(this.value);
+		movingBox.setText(this.value);
+		canvas.renderAll();
+	}, false);
+
+	var movingBox = new fabric.Text("Your Major Here",{//fabric.Rect({
 		backgroundColor: "white",
 		hasBorders: false,
 		hasControls: false
@@ -73,4 +64,14 @@ img.onload = function(){
 
 	canvas.add(boundingBox);
 	canvas.add(movingBox);
+
+//var x = document.createElement("INPUT");
+//x.setAttribute("type", "text");
+//x.setAttribute("value", "Hello World!");
+//x.setAttribute("id", "majorInp");
+//x.setAttribute("onkeyup", "updateText(this);");
+
+
+
 };
+
