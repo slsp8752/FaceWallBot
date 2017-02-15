@@ -2,6 +2,86 @@ var img = new Image();
 img.src = "dog.jpg"; 
 var canvas = new fabric.Canvas("canvas");
 
+function wrapCanvasText(t, canvas, maxW, maxH) {
+
+    if (typeof maxH === "undefined") {
+        maxH = 0;
+    }
+
+    // var words = t.text.split(" ");
+    var words = t.split(" ");
+    var formatted = '';
+
+    // clear newlines
+    // var sansBreaks = t.text.replace(/(\r\n|\n|\r)/gm, "");  
+    var sansBreaks = t.replace(/(\r\n|\n|\r)/gm, "");
+    // calc line height
+    var lineHeight = new fabric.Text(sansBreaks, {
+        fontFamily: t.fontFamily,
+        fontSize: 25 //t.fontSize
+    }).height;
+
+    // adjust for vertical offset
+    var maxHAdjusted = maxH > 0 ? maxH - lineHeight : 0;
+    var context = canvas.getContext("2d");
+
+
+    context.font = t.fontSize + "px " + t.fontFamily;
+    var currentLine = "";
+    var breakLineCount = 0;
+
+    for (var n = 0; n < words.length; n++) {
+
+        var isNewLine = currentLine == "";
+        var testOverlap = currentLine + ' ' + words[n];
+
+        // are we over width?
+        var w = context.measureText(testOverlap).width;
+		console.log(testOverlap);
+		console.log(w);
+
+        if (w < maxW) { // if not, keep adding words
+            currentLine += words[n] + ' ';
+            formatted += words[n] += ' ';
+        } else {
+
+            // if this hits, we got a word that need to be hypenated
+            if (isNewLine) {
+                var wordOverlap = "";
+
+                // test word length until its over maxW
+                for (var i = 0; i < words[n].length; ++i) {
+
+                    wordOverlap += words[n].charAt(i);
+                    var withHypeh = wordOverlap;
+
+                    if (context.measureText(withHypeh).width >= maxW) {
+                        // add hyphen when splitting a word
+                        withHypeh = wordOverlap.substr(0, wordOverlap.length - 1);
+                        // update current word with remainder
+                        words[n] = words[n].substr(wordOverlap.length - 1, words[n].length);
+                        formatted += withHypeh; // add hypenated word
+                        break;
+                    }
+                }
+            }
+            n--; // restart cycle
+            formatted += '\n';
+            breakLineCount++;
+            currentLine = "";
+        }
+        if (maxHAdjusted > 0 && (breakLineCount * lineHeight) > maxHAdjusted) {
+            // add ... at the end indicating text was cutoff
+            formatted = formatted.substr(0, formatted.length - 3) + "...\n";
+            break;
+        }
+    }
+    // get rid of empy newline at the end
+    formatted = formatted.substr(0, formatted.length - 1);
+
+    return formatted;
+}
+
 function showfield(name){
   if(name=='Other')document.getElementById('div1').innerHTML='Other: <input type="text" name="other" />';
   else document.getElementById('div1').innerHTML='';
@@ -20,6 +100,7 @@ function render(){
 //		Download button
 
 img.onload = function(){
+
 	canvas.setBackgroundImage("dog.jpg", render);
 
 	var boundingBox = new fabric.Rect({
@@ -39,19 +120,7 @@ img.onload = function(){
 	$major.value = "Your Major Here";
 	$name.value = "Your Name Here";
 
-	$name.addEventListener("keyup", function(){
-		console.log(this.value);
-		movingBox2.setText(this.value);
-		canvas.renderAll();
-	}, false);
-
-	$major.addEventListener("keyup", function(){
-		console.log(this.value);
-		movingBox.setText(this.value);
-		canvas.renderAll();
-	}, false);
-
-	var movingBox = new fabric.Text("",{//fabric.Rect({
+	var textSample = new fabric.Text(wrapCanvasText("", canvas, 50, img.height/4), {
 		fontFamily: 'ocr',
 		backgroundColor: "white",
 		lockMovementX: true,
@@ -64,7 +133,7 @@ img.onload = function(){
 		left: img.width/2
 	});
 
-	var movingBox2 = new fabric.Text("",{//fabric.Rect({
+	var nameText = new fabric.Text(wrapCanvasText("", canvas, img.width, img.height/4), {
 		fontFamily: 'ocr',
 		backgroundColor: "white",
 		lockMovementX: true,
@@ -76,31 +145,56 @@ img.onload = function(){
 		left: img.width/2
 	});
 
-	canvas.on("object:moving", function() {
-	  var top = movingBox.top;
-	  var bottom = top + movingBox.height;
-	  var left = movingBox.left;
-	  var right = left + movingBox.width;
+	canvas.add(nameText);
+	canvas.add(textSample);
+	canvas.renderAll();
 
-      var top2 = movingBox2.top;
-	  var bottom2 = top2 + movingBox2.height;
-	  var left2 = movingBox2.left;
-	  var right2 = left2 + movingBox2.width;
+	$name.addEventListener("keyup", function(){
+		canvas.setActiveObject(nameText);
+		var activeObject = canvas.getActiveObject();
+		activeObject.text = wrapCanvasText($name.value, canvas, img.width, img.height/4);
+		canvas.renderAll();
+	}, false);
 
-	  var topBound = boundingBox.top;
-	  var bottomBound = topBound + boundingBox.height;
-	  var leftBound = boundingBox.left;
-	  var rightBound = leftBound + boundingBox.width;
+	$major.addEventListener("keyup", function(){
+        canvas.setActiveObject(textSample);
+		var activeObject = canvas.getActiveObject();
+		activeObject.text = wrapCanvasText($major.value, canvas, 100, img.height/4);
+		canvas.renderAll();
+		
+    
+	}, false);
 
-	  movingBox.setLeft(Math.min(Math.max(left, leftBound), rightBound - movingBox.width));
-	  movingBox2.setLeft(Math.min(Math.max(left2, leftBound), rightBound - movingBox.width));
-	  movingBox.setTop(Math.min(Math.max(top, topBound), bottomBound - movingBox.height));
-	  movingBox2.setTop(Math.min(Math.max(top2, topBound), bottomBound - movingBox.height));
-});
+//	var movingBox = new fabric.Text(formatted1,{//fabric.Rect({
+//		fontFamily: 'ocr',
+//		backgroundColor: "white",
+//		lockMovementX: true,
+//		lockMovementY: true,
+//		hasBorders: true,
+//		hasControls: false,
+//		originX: 'center',
+//		originY: 'bottom',
+//		top: img.height - 20,
+//		left: img.width/2
+//	});
+
+//	var movingBox2 = new fabric.Text("",{//fabric.Rect({
+//		fontFamily: 'ocr',
+//		backgroundColor: "white",
+//		lockMovementX: true,
+//		lockMovementY: true,
+//		hasBorders: false,
+//		hasControls: false,
+//		originX: 'center',
+//		top: 20,
+//		left: img.width/2
+//	});
+
+
 
 	canvas.add(boundingBox);
-	canvas.add(movingBox);
-	canvas.add(movingBox2);
+	//canvas.add(movingBox);
+//	canvas.add(movingBox2);
 //var x = document.createElement("INPUT");
 //x.setAttribute("type", "text");
 //x.setAttribute("value", "Hello World!");
