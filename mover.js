@@ -1,4 +1,12 @@
 var img = new Image();
+var img_uri;
+Webcam.attach('#camera');
+function take_snapshot(){
+	Webcam.snap(function(data_uri){
+		img_uri = data_uri;
+		console.log(data_uri);
+	});
+}
 img.src = "dog.jpg"; 
 var canvas = new fabric.Canvas("canvas");
 
@@ -24,7 +32,6 @@ function wrapCanvasText(t, canvas, maxW, maxH) {
     // adjust for vertical offset
     var maxHAdjusted = maxH > 0 ? maxH - lineHeight : 0;
     var context = canvas.getContext("2d");
-
 
     context.font = t.fontSize + "px " + t.fontFamily;
     var currentLine = "";
@@ -93,7 +100,7 @@ function render(){
 	canvas.renderAll();
 }
 
-//TODO: Add second text box
+//TODO:
 //		Make dropdown for Majors
 //		change font
 //		Save button
@@ -120,26 +127,28 @@ img.onload = function(){
 	$major.value = "Your Major Here";
 	$name.value = "Your Name Here";
 
-	var textSample = new fabric.Text(wrapCanvasText("", canvas, 50, img.height/4), {
+	var textSample = new fabric.Text(wrapCanvasText("", canvas, 100, img.height/4), {
 		fontFamily: 'ocr',
 		backgroundColor: "white",
 		lockMovementX: true,
 		lockMovementY: true,
 		hasBorders: true,
 		hasControls: false,
+	  	textAlign: "center",
 		originX: 'center',
 		originY: 'bottom',
 		top: img.height - 20,
 		left: img.width/2
 	});
 
-	var nameText = new fabric.Text(wrapCanvasText("", canvas, img.width, img.height/4), {
+	var nameText = new fabric.Text(wrapCanvasText("", canvas, 100, img.height/4), {
 		fontFamily: 'ocr',
 		backgroundColor: "white",
 		lockMovementX: true,
 		lockMovementY: true,
 		hasBorders: false,
 		hasControls: false,
+	  	textAlign: "center",
 		originX: 'center',
 		top: 20,
 		left: img.width/2
@@ -152,7 +161,7 @@ img.onload = function(){
 	$name.addEventListener("keyup", function(){
 		canvas.setActiveObject(nameText);
 		var activeObject = canvas.getActiveObject();
-		activeObject.text = wrapCanvasText($name.value, canvas, img.width, img.height/4);
+		activeObject.text = wrapCanvasText($name.value, canvas, 100, img.height/4);
 		canvas.renderAll();
 	}, false);
 
@@ -165,43 +174,7 @@ img.onload = function(){
     
 	}, false);
 
-//	var movingBox = new fabric.Text(formatted1,{//fabric.Rect({
-//		fontFamily: 'ocr',
-//		backgroundColor: "white",
-//		lockMovementX: true,
-//		lockMovementY: true,
-//		hasBorders: true,
-//		hasControls: false,
-//		originX: 'center',
-//		originY: 'bottom',
-//		top: img.height - 20,
-//		left: img.width/2
-//	});
-
-//	var movingBox2 = new fabric.Text("",{//fabric.Rect({
-//		fontFamily: 'ocr',
-//		backgroundColor: "white",
-//		lockMovementX: true,
-//		lockMovementY: true,
-//		hasBorders: false,
-//		hasControls: false,
-//		originX: 'center',
-//		top: 20,
-//		left: img.width/2
-//	});
-
-
-
 	canvas.add(boundingBox);
-	//canvas.add(movingBox);
-//	canvas.add(movingBox2);
-//var x = document.createElement("INPUT");
-//x.setAttribute("type", "text");
-//x.setAttribute("value", "Hello World!");
-//x.setAttribute("id", "majorInp");
-//x.setAttribute("onkeyup", "updateText(this);");
-
-
 
 };
 

@@ -5,10 +5,16 @@
 </head>
 <body>
 	<canvas id="canvas"></canvas>
+	<script src="webcamjs/webcam.js"</script>
+	<script src="webcamjs/pic_taker.js"></script>
+    <div id="camera" style="width:320px; height:240px;"></div>
+    <div id="my_result"></div>
     <script src="fabric.js-1.7.3/dist/fabric.js"></script>
     <script src="mover.js"></script>
 	<input type="text" id="name">
 	<input type="text" id="major">
+	<input type="button" onclick="take_snapshot();" value="Take Snapshot"/>
+
 </body>
 </html>
 
