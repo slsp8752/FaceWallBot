@@ -5,8 +5,16 @@ function take_snapshot(){
 	Webcam.snap(function(data_uri){
 		img_uri = data_uri;
 		console.log(data_uri);
+		document.getElementById("camera").innerHTML = "<img src=\"" + data_uri + "\"/>";
+		//replace camera div with image
+		//accept/reject dialog function
 	});
 }
+
+// function for accept/ reject {
+	// on accept, go to cropping
+	// on reject, go back to camera
+
 img.src = "dog.jpg"; 
 var canvas = new fabric.Canvas("canvas");
 
