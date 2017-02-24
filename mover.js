@@ -1,11 +1,42 @@
+// Sources
+// https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript 
+// http://fabricjs.com/
+// https://github.com/jhuckaby/webcamjs
+// http://jsfiddle.net/illumine/Avvxn/
+
+// TODO:
+//		cropping
+//		finish button flow
+//		print/save
+//		refresh
+//		make it look good
+
 var img = new Image();
 var img_uri;
 Webcam.attach('#camera');
+
+function addElement(parentId, elementTag, elementId, html) {
+    // Adds an element to the document
+    var p = document.getElementById(parentId);
+    var newElement = document.createElement(elementTag);
+    newElement.setAttribute('id', elementId);
+    newElement.innerHTML = html;
+    p.appendChild(newElement);
+}
+
+function removeElement(elementId) {
+    // Removes an element from the document
+    var element = document.getElementById(elementId);
+    element.parentNode.removeChild(element);
+}
+
 function take_snapshot(){
 	Webcam.snap(function(data_uri){
 		img_uri = data_uri;
 		console.log(data_uri);
 		document.getElementById("camera").innerHTML = "<img src=\"" + data_uri + "\"/>";
+		confirm_buttons_html = '<input type="button" value="Confirm"/> <input type="button" value="Retake"/>'; 
+		addElement('buttons', 'p', 'retakeButton', confirm_buttons_html);
 		//replace camera div with image
 		//accept/reject dialog function
 	});
@@ -97,24 +128,16 @@ function wrapCanvasText(t, canvas, maxW, maxH) {
     return formatted;
 }
 
-function showfield(name){
-  if(name=='Other')document.getElementById('div1').innerHTML='Other: <input type="text" name="other" />';
-  else document.getElementById('div1').innerHTML='';
-}
-
 function render(){
 	canvas.setWidth(img.width);
 	canvas.setHeight(img.height);
 	canvas.renderAll();
 }
 
-//TODO:
-//		Make dropdown for Majors
-//		change font
-//		Save button
-//		Download button
-
 img.onload = function(){
+};
+
+function createCanvas(){
 
 	canvas.setBackgroundImage("dog.jpg", render);
 
@@ -184,5 +207,5 @@ img.onload = function(){
 
 	canvas.add(boundingBox);
 
-};
+}
 
