@@ -30,12 +30,20 @@ function removeElement(elementId) {
     element.parentNode.removeChild(element);
 }
 
+function clearImage(){
+	document.getElementById("camera").innerHTML = "";
+	Webcam.attach('#camera');
+	snapshotButtonHTML = '<input type="button" onclick="take_snapshot();" value="Take Snapshot"/>';
+	removeElement('retakeButton');
+	addElement('buttons', 'p', 'takeSnapshot', snapshotButtonHTML);
+}
+
 function take_snapshot(){
+	removeElement("takeSnapshot");
 	Webcam.snap(function(data_uri){
 		img_uri = data_uri;
-		console.log(data_uri);
 		document.getElementById("camera").innerHTML = "<img src=\"" + data_uri + "\"/>";
-		confirm_buttons_html = '<input type="button" value="Confirm"/> <input type="button" value="Retake"/>'; 
+		confirm_buttons_html = '<input type="button" value="Confirm"/> <input type="button" value="Retake" onclick="clearImage();"/>'; 
 		addElement('buttons', 'p', 'retakeButton', confirm_buttons_html);
 		//replace camera div with image
 		//accept/reject dialog function
@@ -83,8 +91,6 @@ function wrapCanvasText(t, canvas, maxW, maxH) {
 
         // are we over width?
         var w = context.measureText(testOverlap).width;
-		console.log(testOverlap);
-		console.log(w);
 
         if (w < maxW) { // if not, keep adding words
             currentLine += words[n] + ' ';
