@@ -30,6 +30,24 @@ function removeElement(elementId) {
     element.parentNode.removeChild(element);
 }
 
+function cropImage(){
+		
+	var image = document.querySelector("#toCrop");
+	var cropper = new Cropper(image, {
+		dragMode: 'none',
+		aspectRatio: 3 / 5,
+		autoCropArea: 0.8,
+		restore: false,
+		guides: false,
+		center: false,
+		highlight: false,
+		zoomable: false,
+		cropBoxResizable: false,
+		toggleDragModeOnDblclick: false,
+	});
+}
+
+
 function clearImage(){
 	document.getElementById("camera").innerHTML = "";
 	Webcam.attach('#camera');
@@ -42,8 +60,8 @@ function take_snapshot(){
 	removeElement("takeSnapshot");
 	Webcam.snap(function(data_uri){
 		img_uri = data_uri;
-		document.getElementById("camera").innerHTML = "<img src=\"" + data_uri + "\"/>";
-		confirm_buttons_html = '<input type="button" value="Confirm"/> <input type="button" value="Retake" onclick="clearImage();"/>'; 
+		document.getElementById("camera").innerHTML = "<img id=\"toCrop\" src=\"" + data_uri + "\"/>";
+		confirm_buttons_html = '<input type="button" value="Confirm" onclick="cropImage();"/> <input type="button" value="Retake" onclick="clearImage();"/>'; 
 		addElement('buttons', 'p', 'retakeButton', confirm_buttons_html);
 		//replace camera div with image
 		//accept/reject dialog function
