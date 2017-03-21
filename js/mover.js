@@ -32,6 +32,7 @@ function removeElement(elementId) {
 
 function cropImage(){
 		
+	removeElement('retakeButton');
 	var image = document.querySelector("#toCrop");
 	var cropper = new Cropper(image, {
 		dragMode: 'none',
@@ -45,8 +46,23 @@ function cropImage(){
 		cropBoxResizable: false,
 		toggleDragModeOnDblclick: false,
 	});
-}
+	confirmCropHTML = '<input type="button" value="Crop"/>';
+	addElement('buttons', 'p', 'confirmCrop', confirmCropHTML); 
+	
+	document.getElementById("confirmCrop").onclick = function () {
+		var croppedCanvas;
+		var croppedImage;
+		// Crop
+		croppedCanvas = cropper.getCroppedCanvas();
+		// Show
+		croppedImage = document.createElement('img');
+		croppedImage.src = croppedCanvas.toDataURL()
+		document.getElementById("camera").innerHTML = '';
+		document.getElementById("camera").appendChild(croppedImage);
 
+	}
+
+}
 
 function clearImage(){
 	document.getElementById("camera").innerHTML = "";
