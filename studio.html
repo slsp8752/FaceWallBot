@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link  href="css/cropper.css" rel="stylesheet">
+</head>
+<body>
+	<script src="js/cropper.js"></script>
+	<script src="js/webcamjs/webcam.js"</script>
+	<script src="js/webcamjs/pic_taker.js"></script>
+    <div id="camera" style="width:1280px; height:960px;"></div>
+    <div id="my_result"></div>
+    <script src="js/fabric.js-1.7.3/dist/fabric.js"></script>
+    <script src="js/mover.js"></script>
+
+
+	<div id="buttons">
+	<p>
+	<input id="takeSnapshot" type="button" onclick="take_snapshot();" value="Take Snapshot"/>
+	</p>
+	</div>
+
+	<div id="textfields">
+		<input type="text" id="name">
+		<input type="text" id="major">
+	</div>
+	
+
+</body>
+</html>
+
