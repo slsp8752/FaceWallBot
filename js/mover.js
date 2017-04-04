@@ -57,8 +57,9 @@ function cropImage(){
 		// Show
 		croppedImage = document.createElement('img');
 		croppedImage.src = croppedCanvas.toDataURL()
-		document.getElementById("camera").innerHTML = '';
-		document.getElementById("camera").appendChild(croppedImage);
+		document.getElementById("camera").innerHTML = "<canvas id=manvas></canvas>";
+		removeElement('confirmCrop');
+		attachCanvas(croppedCanvas.toDataURL());
 
 	}
 
@@ -84,12 +85,10 @@ function take_snapshot(){
 	});
 }
 
-// function for accept/ reject {
-	// on accept, go to cropping
-	// on reject, go back to camera
+function attachCanvas(face_uri){
+img.src = face_uri; 
 
-img.src = "dog.jpg"; 
-var canvas = new fabric.Canvas("canvas");
+var canvas = new fabric.Canvas("manvas"); //create this @ "camera"
 
 function wrapCanvasText(t, canvas, maxW, maxH) {
 
@@ -175,11 +174,8 @@ function render(){
 }
 
 img.onload = function(){
-};
 
-function createCanvas(){
-
-	canvas.setBackgroundImage("dog.jpg", render);
+	canvas.setBackgroundImage(face_uri, render);
 
 	var boundingBox = new fabric.Rect({
 	  fill: 'rgba(0,0,0,0)',
@@ -198,7 +194,7 @@ function createCanvas(){
 	$major.value = "Your Major Here";
 	$name.value = "Your Name Here";
 
-	var textSample = new fabric.Text(wrapCanvasText("", canvas, 100, img.height/4), {
+	var textSample = new fabric.Text(wrapCanvasText("", canvas, 90, img.height/4), {
 		fontFamily: 'ocr',
 		backgroundColor: "white",
 		lockMovementX: true,
@@ -212,7 +208,7 @@ function createCanvas(){
 		left: img.width/2
 	});
 
-	var nameText = new fabric.Text(wrapCanvasText("", canvas, 100, img.height/4), {
+	var nameText = new fabric.Text(wrapCanvasText("", canvas, 90, img.height/4), {
 		fontFamily: 'ocr',
 		backgroundColor: "white",
 		lockMovementX: true,
@@ -232,14 +228,14 @@ function createCanvas(){
 	$name.addEventListener("keyup", function(){
 		canvas.setActiveObject(nameText);
 		var activeObject = canvas.getActiveObject();
-		activeObject.text = wrapCanvasText($name.value, canvas, 100, img.height/4);
+		activeObject.text = wrapCanvasText($name.value, canvas, 90, img.height/4);
 		canvas.renderAll();
 	}, false);
 
 	$major.addEventListener("keyup", function(){
         canvas.setActiveObject(textSample);
 		var activeObject = canvas.getActiveObject();
-		activeObject.text = wrapCanvasText($major.value, canvas, 100, img.height/4);
+		activeObject.text = wrapCanvasText($major.value, canvas, 90, img.height/4);
 		canvas.renderAll();
 		
     
@@ -247,5 +243,5 @@ function createCanvas(){
 
 	canvas.add(boundingBox);
 
+};
 }
-

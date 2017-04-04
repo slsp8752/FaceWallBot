@@ -11,6 +11,6 @@ canvas {
 
 @font-face {
     font-family: 'ocr';
-    src: url('./OCRAEXT.TTF');
+    src: url('../OCRAEXT.TTF');
 }
 
