@@ -5,11 +5,11 @@
 // http://jsfiddle.net/illumine/Avvxn/
 
 // TODO:
-//		cropping
-//		finish button flow
 //		print/save
-//		refresh
 //		make it look good
+
+//Stretch goals
+//		picture upload
 
 var img = new Image();
 var img_uri;
@@ -58,6 +58,8 @@ function cropImage(){
 		croppedImage = document.createElement('img');
 		croppedImage.src = croppedCanvas.toDataURL()
 		document.getElementById("camera").innerHTML = "<canvas id=manvas></canvas>";
+		document.getElementById("camera").style.width = "460px";
+		document.getElementById("camera").style.height = "768px";
 		removeElement('confirmCrop');
 		attachCanvas(croppedCanvas.toDataURL());
 

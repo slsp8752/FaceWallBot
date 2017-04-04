@@ -11,6 +11,15 @@ canvas {
 
 @font-face {
     font-family: 'ocr';
-    src: url('../OCRAEXT.TTF');
+    src: url('../fonts/OCRAEXT.TTF');
 }
 
+#camera {
+	width: 50%;
+	margin: 0 auto;
+}
+
+#buttons p input{
+	width: 50%;
+	margin: 0 auto;
+}
