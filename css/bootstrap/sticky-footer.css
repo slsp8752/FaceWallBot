@@ -1,17 +1,3 @@
-.container {
-  width: auto;
-  max-width: 680px;
-  padding: 0 15px;
-}
-.container .text-muted {
-  margin: 20px 0;
-}
-
-.starter-template {
-  padding: 40px 15px;
-  text-align: center;
-}
-
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -20,7 +6,6 @@ html {
 }
 body {
   /* Margin bottom by footer height */
-  margin-top: 100px;
   margin-bottom: 60px;
 }
 .footer {
@@ -33,4 +18,15 @@ body {
 }
 
 
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
 
+.container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
