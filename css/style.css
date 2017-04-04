@@ -2,6 +2,10 @@ canvas {
 	font-family: ocr;
 }
 
+.face-center{
+  width: 50%;
+  margin: 0 auto;
+}
 
 #load {
 	font-family: ocr; 
@@ -13,13 +17,19 @@ canvas {
     font-family: 'ocr';
     src: url('../fonts/OCRAEXT.TTF');
 }
-
-#camera {
-	width: 50%;
-	margin: 0 auto;
+    
+.container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
+.container .text-muted {
+  margin: 20px 0;
 }
 
-#buttons p input{
-	width: 50%;
-	margin: 0 auto;
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
 }
+
+
