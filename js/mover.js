@@ -77,15 +77,32 @@ function clearImage(){
 
 function take_snapshot(){
 	removeElement("takeSnapshot");
-	Webcam.snap(function(data_uri){
-		img_uri = data_uri;
-		document.getElementById("camera").innerHTML = "<img id=\"toCrop\" src=\"" + data_uri + "\"/>";
-		confirm_buttons_html = '<input type="button" value="Confirm" onclick="cropImage();"/> <input type="button" value="Retake" onclick="clearImage();"/>'; 
-		addElement('buttons', 'p', 'retakeButton', confirm_buttons_html);
-		//replace camera div with image
-		//accept/reject dialog function
-	});
-}
+
+	//replace instructions div with countdown
+	document.getElementById('instructions').innerHTML = "<h1 id='timer'>3</h1>";
+	var seconds_left = 3;
+	var interval = setInterval(function() {
+    document.getElementById('timer').innerHTML = --seconds_left;
+
+    if (seconds_left <= 0)
+    {
+		//replace buttons with accept/reject, replace timer with instructions
+		Webcam.snap(function(data_uri){
+			img_uri = data_uri;
+			document.getElementById("camera").innerHTML = "<img id=\"toCrop\" src=\"" + data_uri + "\"/>";
+			confirm_buttons_html = '<input type="button" value="Confirm" onclick="cropImage();"/> <input type="button" value="Retake" onclick="clearImage();"/>'; 
+			addElement('buttons', 'p', 'retakeButton', confirm_buttons_html);
+		});
+
+        clearInterval(interval);
+		document.getElementById('timer').innerHTML = "";
+
+    }
+	}, 1000);
+
+
+
+	}
 
 function attachCanvas(face_uri){
 img.src = face_uri; 

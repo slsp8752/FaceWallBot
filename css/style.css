@@ -32,4 +32,18 @@ canvas {
   text-align: center;
 }
 
-
+#timer {
+	z-index: 20;
+	font-size: 1000%;
+	position: fixed;
+	top: 384px;
+	left: 50%;
+   -webkit-text-stroke: 1px black;
+   color: white;
+   text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+}

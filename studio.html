@@ -26,15 +26,18 @@
 		<script src="js/cropper.js"></script>
 		<script src="js/webcamjs/webcam.js"</script>
 		<script src="js/webcamjs/pic_taker.js"></script>
-		<div id="camera" style="width:1280px; height:960px;" class="face-center"></div>
+		<div id="camera" style="width:1280px; height:960px;" class="face-center">
+		</div>
 		<div id="my_result"></div>
 		<script src="js/fabric.js-1.7.3/dist/fabric.js"></script>
 		<script src="js/mover.js"></script>
-    </div><!-- /.container -->
+    </div>
 
-	<div id="buttons">
+	<div id="instructions"><p class="lead text-center">Press the button to take your picture! There will be a 3 second timer before the picture is taken, so you don't look like you're trying to click a button. </p></div>
+
+	<div id="buttons" class="text-center">
 	<p>
-	<input id="takeSnapshot" type="button" onclick="take_snapshot();" value="Take Snapshot"/>
+	<input class="btn btn-default" id="takeSnapshot" type="button" onclick="take_snapshot();" value="Take Snapshot"/>
 	</p>
 	</div>
 
