@@ -79,10 +79,26 @@ function take_snapshot(){
 	removeElement("takeSnapshot");
 
 	//replace instructions div with countdown
-	document.getElementById('instructions').innerHTML = "<h1 id='timer'>3</h1>";
+
+	var timerDiv = document.createElement('div');
+	timerDiv.id = 'timer';
+	timerDiv.setAttribute("class", "timer");
+    timerDiv.innerHTML = "3";
+
+	document.getElementById('camera').appendChild(timerDiv);
+		var $cam = $('video','#camera');
+	var $tim = $('.timer');
+
+$tim.css({
+    top:$cam.offset().top + (($cam.height()/2) - ($tim.height()/2)),
+    left:$cam.offset().left + (($cam.width()/2) - ($tim.width()/2))
+});document.getElementById('instructions').innerHTML = "faf";
 	var seconds_left = 3;
 	var interval = setInterval(function() {
     document.getElementById('timer').innerHTML = --seconds_left;
+
+
+
 
     if (seconds_left <= 0)
     {
@@ -95,7 +111,6 @@ function take_snapshot(){
 		});
 
         clearInterval(interval);
-		document.getElementById('timer').innerHTML = "";
 
     }
 	}, 1000);
