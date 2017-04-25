@@ -46,7 +46,9 @@ function cropImage(){
 		cropBoxResizable: false,
 		toggleDragModeOnDblclick: false,
 	});
-	confirmCropHTML = '<input type="button" value="Crop"/>';
+
+	document.getElementById('instructions').innerHTML = '<p class="lead text-center">Move the blue box over your face, and press \"Crop\"!</p>';
+	confirmCropHTML = '<input class="btn btn-default" type="button" value="Crop"/>';
 	addElement('buttons', 'p', 'confirmCrop', confirmCropHTML); 
 	
 	document.getElementById("confirmCrop").onclick = function () {
@@ -69,8 +71,9 @@ function cropImage(){
 
 function clearImage(){
 	document.getElementById("camera").innerHTML = "";
+	document.getElementById('instructions').innerHTML = '<p class="lead text-center">Press the button to take your picture! There will be a 3 second timer before the picture is taken, so you don\'t look like you\'re trying to click a button. </p>';
 	Webcam.attach('#camera');
-	snapshotButtonHTML = '<input type="button" onclick="take_snapshot();" value="Take Snapshot"/>';
+	snapshotButtonHTML = '<input class="btn btn-default" type="button" onclick="take_snapshot();" value="Take Snapshot"/>';
 	removeElement('retakeButton');
 	addElement('buttons', 'p', 'takeSnapshot', snapshotButtonHTML);
 }
@@ -92,7 +95,7 @@ function take_snapshot(){
 $tim.css({
     top:$cam.offset().top + (($cam.height()/2) - ($tim.height()/2)),
     left:$cam.offset().left + (($cam.width()/2) - ($tim.width()/2))
-});document.getElementById('instructions').innerHTML = "faf";
+});
 	var seconds_left = 3;
 	var interval = setInterval(function() {
     document.getElementById('timer').innerHTML = --seconds_left;
@@ -105,8 +108,10 @@ $tim.css({
 		//replace buttons with accept/reject, replace timer with instructions
 		Webcam.snap(function(data_uri){
 			img_uri = data_uri;
+			document.getElementById('instructions').innerHTML = '<p class="lead text-center">If you\'re happy with your picture, click \"Confirm\". Otherwise, click \"Retake\" to try again!</p>';
+
 			document.getElementById("camera").innerHTML = "<img id=\"toCrop\" src=\"" + data_uri + "\"/>";
-			confirm_buttons_html = '<input type="button" value="Confirm" onclick="cropImage();"/> <input type="button" value="Retake" onclick="clearImage();"/>'; 
+			confirm_buttons_html = '<input class="btn btn-default" type="button" value="Confirm" onclick="cropImage();"/> <input class="btn btn-default" type="button" value="Retake" onclick="clearImage();"/>'; 
 			addElement('buttons', 'p', 'retakeButton', confirm_buttons_html);
 		});
 
@@ -222,6 +227,11 @@ img.onload = function(){
 	  evented: false,
 	  stroke: "red"
 	});
+
+	textfieldsHTML = '<input type="text" id="name"> <input type="text" id="major">';
+	addElement('buttons', 'p', 'textfields', textfieldsHTML);
+
+	document.getElementById('instructions').innerHTML = '<p class="lead text-center">Enter your name and Major in the boxes below then click \"Print\" to print your face, or \"Save\" to save your face to your device.</p>';
 
 	var $major = document.getElementById('major');
 	var $name = document.getElementById('name');
