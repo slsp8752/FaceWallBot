@@ -8,6 +8,10 @@ canvas {
 	text-align: center;
 }
 
+.cropped-inst {
+	padding-top: 50px;
+}
+
 #load {
 	font-family: ocr; 
 	visibility: hidden; 

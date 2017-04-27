@@ -59,7 +59,11 @@ function cropImage(){
 		// Show
 		croppedImage = document.createElement('img');
 		croppedImage.src = croppedCanvas.toDataURL()
+		//removeElement('camera');
+		//addElement('cropped', 'p', 'finalCanvas', '<canvas id=manvas></canvas>');
+		
 		document.getElementById("camera").innerHTML = "<canvas id=manvas></canvas>";
+
 		document.getElementById("camera").style.width = "460px";
 		document.getElementById("camera").style.height = "768px";
 		removeElement('confirmCrop');
@@ -225,18 +229,18 @@ img.onload = function(){
 	  lockMovementX: true,
 	  lockMovementY: true,
 	  evented: false,
-	  stroke: "red"
 	});
 
-	textfieldsHTML = '<input type="text" id="name"> <input type="text" id="major">';
-	addElement('buttons', 'p', 'textfields', textfieldsHTML);
+	textfieldsHTML = '<div class="row"><div class="col-xs-2 col-md-offset-5"><input type="text" class="form-control" id="name" placeholder="Your Name"> <input type="text" class="form-control" id="major" placeholder="Your Major"></div>';
+	saveprintButtonsHTML = '<input class="btn btn-default" type="button" value="Print" onclick="console.log(\'print\');"/> <input class="btn btn-default" type="button" value="Save" onclick="console.log(\'save\');"/>';
 
-	document.getElementById('instructions').innerHTML = '<p class="lead text-center">Enter your name and Major in the boxes below then click \"Print\" to print your face, or \"Save\" to save your face to your device.</p>';
+	addElement('buttons', 'p', 'textfields', textfieldsHTML);
+	addElement('buttons', 'p', 'print', saveprintButtonsHTML);
+
+	document.getElementById('instructions').innerHTML = '<p class="lead text-center cropped-inst">Enter your name and Major in the boxes below then click \"Print\" to print your face, or \"Save\" to save your face to your device.</p>';
 
 	var $major = document.getElementById('major');
 	var $name = document.getElementById('name');
-	$major.value = "Your Major Here";
-	$name.value = "Your Name Here";
 
 	var textSample = new fabric.Text(wrapCanvasText("", canvas, 90, img.height/4), {
 		fontFamily: 'ocr',
