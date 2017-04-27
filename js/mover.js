@@ -216,6 +216,11 @@ function render(){
 	canvas.renderAll();
 }
 
+function saveCanvas(){
+	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+	window.location.href=image; // it will save locally
+}
+
 img.onload = function(){
 
 	canvas.setBackgroundImage(face_uri, render);
@@ -232,10 +237,15 @@ img.onload = function(){
 	});
 
 	textfieldsHTML = '<div class="row"><div class="col-xs-2 col-md-offset-5"><input type="text" class="form-control" id="name" placeholder="Your Name"> <input type="text" class="form-control" id="major" placeholder="Your Major"></div>';
-	saveprintButtonsHTML = '<input class="btn btn-default" type="button" value="Print" onclick="console.log(\'print\');"/> <input class="btn btn-default" type="button" value="Save" onclick="console.log(\'save\');"/>';
+	saveprintButtonsHTML = '<input class="btn btn-default" type="button" value="Print" onclick="console.log(\'print\');"/> <a href="#" class="btn btn-default" role="button" id="savebutton" download="yourFace.png">Save</a>';
 
 	addElement('buttons', 'p', 'textfields', textfieldsHTML);
 	addElement('buttons', 'p', 'print', saveprintButtonsHTML);
+
+	document.getElementById("savebutton").addEventListener("click", function(e){
+		var dataURL = canvas.toDataURL('image/png');
+		savebutton.href = dataURL;
+	});
 
 	document.getElementById('instructions').innerHTML = '<p class="lead text-center cropped-inst">Enter your name and Major in the boxes below then click \"Print\" to print your face, or \"Save\" to save your face to your device.</p>';
 
