@@ -216,11 +216,6 @@ function render(){
 	canvas.renderAll();
 }
 
-function saveCanvas(){
-	var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
-	window.location.href=image; // it will save locally
-}
-
 img.onload = function(){
 
 	canvas.setBackgroundImage(face_uri, render);
@@ -237,10 +232,24 @@ img.onload = function(){
 	});
 
 	textfieldsHTML = '<div class="row"><div class="col-xs-2 col-md-offset-5"><input type="text" class="form-control" id="name" placeholder="Your Name"> <input type="text" class="form-control" id="major" placeholder="Your Major"></div>';
-	saveprintButtonsHTML = '<input class="btn btn-default" type="button" value="Print" onclick="console.log(\'print\');"/> <a href="#" class="btn btn-default" role="button" id="savebutton" download="yourFace.png">Save</a>';
+	saveprintButtonsHTML = '<input class="btn btn-default" value="Print" type="button" id="printbutton""/> <a href="#" class="btn btn-default" role="button" id="savebutton" download="yourFace.png">Save</a>';
 
 	addElement('buttons', 'p', 'textfields', textfieldsHTML);
 	addElement('buttons', 'p', 'print', saveprintButtonsHTML);
+
+
+	document.getElementById("printbutton").addEventListener("click", function(e){
+		var dataURL = canvas.toDataURL('image/png');
+		var popup = window.open();
+		var img = new Image();
+		img.onload = function() { 
+			popup.document.write("<br><img style='width:3in;height:5in'src='"+ dataURL +"'/>");
+			popup.print();
+		}
+		img.src = dataURL;
+//		popup.print();	
+		//popup.location.reload();
+	});
 
 	document.getElementById("savebutton").addEventListener("click", function(e){
 		var dataURL = canvas.toDataURL('image/png');
