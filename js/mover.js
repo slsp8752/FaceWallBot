@@ -64,8 +64,9 @@ function cropImage(){
 		
 		document.getElementById("camera").innerHTML = "<canvas id=manvas></canvas>";
 
-		document.getElementById("camera").style.width = "460px";
-		document.getElementById("camera").style.height = "768px";
+		//document.getElementById("camera").style.width = "1280px";
+		//document.getElementById("camera").style.height = "720px";
+		document.getElementById("camera").setAttribute("class", "face-center")
 		removeElement('confirmCrop');
 		attachCanvas(croppedCanvas.toDataURL());
 
@@ -149,7 +150,7 @@ function wrapCanvasText(t, canvas, maxW, maxH) {
     // calc line height
     var lineHeight = new fabric.Text(sansBreaks, {
         fontFamily: t.fontFamily,
-        fontSize: 25 //t.fontSize
+        fontSize: 32 //t.fontSize
     }).height;
 
     // adjust for vertical offset
@@ -261,8 +262,9 @@ img.onload = function(){
 	var $major = document.getElementById('major');
 	var $name = document.getElementById('name');
 
-	var textSample = new fabric.Text(wrapCanvasText("", canvas, 90, img.height/4), {
+	var textSample = new fabric.Text(wrapCanvasText("", canvas, 85, img.height/4), {
 		fontFamily: 'ocr',
+		fontSize: 32,
 		backgroundColor: "white",
 		lockMovementX: true,
 		lockMovementY: true,
@@ -275,8 +277,9 @@ img.onload = function(){
 		left: img.width/2
 	});
 
-	var nameText = new fabric.Text(wrapCanvasText("", canvas, 90, img.height/4), {
+	var nameText = new fabric.Text(wrapCanvasText("", canvas, 85, img.height/4), {
 		fontFamily: 'ocr',
+		fontSize: 32,
 		backgroundColor: "white",
 		lockMovementX: true,
 		lockMovementY: true,
@@ -295,14 +298,14 @@ img.onload = function(){
 	$name.addEventListener("keyup", function(){
 		canvas.setActiveObject(nameText);
 		var activeObject = canvas.getActiveObject();
-		activeObject.text = wrapCanvasText($name.value, canvas, 90, img.height/4);
+		activeObject.text = wrapCanvasText($name.value, canvas, 85, img.height/4);
 		canvas.renderAll();
 	}, false);
 
 	$major.addEventListener("keyup", function(){
         canvas.setActiveObject(textSample);
 		var activeObject = canvas.getActiveObject();
-		activeObject.text = wrapCanvasText($major.value, canvas, 90, img.height/4);
+		activeObject.text = wrapCanvasText($major.value, canvas, 85, img.height/4);
 		canvas.renderAll();
 		
     
