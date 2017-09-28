@@ -4,6 +4,8 @@
 
 Facewall Studio is a tool for labeling and printing photos of faces. It's used to maintain a physical database of BTU Lab members. Instead of tasking a single person to label every person's photo with their name and affiliation, each member is in control of their photo and respective labels, getting rid of needless busy-work!
 
+![Facewall's many faces](images/faces.jpg)
+
 ## Setup
 
 ### Preamble
